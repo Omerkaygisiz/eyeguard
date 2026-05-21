@@ -46,12 +46,17 @@ EyeGuard automates this — when break time comes, it locks your screen and **us
 <p align="center">
   <img src="screenshots/main.png" width="45%" alt="Main Panel"/>
   &nbsp;
-  <img src="screenshots/break.png" width="45%" alt="Break Screen"/>
+  <img src="screenshots/stats.png" width="45%" alt="Statistics"/>
 </p>
 <p align="center">
-  <img src="screenshots/stats.png" width="45%" alt="Statistics"/>
-  &nbsp;
   <img src="screenshots/schedule.png" width="45%" alt="Scheduler"/>
+  &nbsp;
+  <img src="screenshots/settings.png" width="45%" alt="Settings"/>
+</p>
+<p align="center">
+  <img src="screenshots/game_mode.png" width="45%" alt="Game Mode"/>
+  &nbsp;
+  <img src="screenshots/tray.png" width="45%" alt="Tray Menu"/>
 </p>
 
 ---
