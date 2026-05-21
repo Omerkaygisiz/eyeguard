@@ -618,9 +618,6 @@ class GazeWrapper:
         yaw_th, pitch_th = self.THRESHOLDS[state.sensitivity]
         raw_away = (yaw_proxy > yaw_th) or (pitch_proxy > pitch_th)
 
-        print(f"[HEAD] yaw_p={yaw_proxy:.3f} pitch_p={pitch_proxy:.3f}  "
-              f"th={yaw_th}/{pitch_th}  away={raw_away}")
-
         with self._lock:
             self._buf.append(raw_away)
             if len(self._buf) > self.BUF_SIZE:
@@ -715,9 +712,14 @@ def safe_after(root, fn, delay=0):
 def play_sound(kind="break"):
     """
     kind: 'warning' | 'break' | 'done'
-    notifications/ klasöründen ilgili dosyayı çalar.
+    Plays the relevant file from the notifications/ folder.
     """
-    _BASE = os.path.dirname(os.path.abspath(__file__))
+    # Correct base path for both PyInstaller EXE and normal script
+    if getattr(sys, 'frozen', False):
+        _BASE = os.path.dirname(sys.executable)
+    else:
+        _BASE = os.path.dirname(os.path.abspath(__file__))
+
     FILES = {
         "warning": os.path.join(_BASE, "notifications", "warning.wav"),
         "break":   os.path.join(_BASE, "notifications", "break.wav"),
