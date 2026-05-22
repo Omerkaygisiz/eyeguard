@@ -1838,7 +1838,6 @@ class App:
 
     def _close_break(self):
         """Mola ekranını kapat, kamera thread'ini durdur, paneli geri getir."""
-        # FIX: kamera thread'ini durdur
         self._stop_cam.set()
 
         if self._break_win:
@@ -1848,7 +1847,12 @@ class App:
             except Exception:
                 pass
             self._break_win = None
-        self.restore_panel()
+
+        # If panel was hidden (tray mode) before break, go back to tray
+        if not state.panel_visible:
+            self.root.withdraw()
+        else:
+            self.restore_panel()
 
     def show_break_done(self):
         """Mola başarıyla tamamlandı — ekrana yaz, 2 sn sonra kapat."""
@@ -2122,12 +2126,21 @@ def _timer_loop():
 
         if state.app:
             state.app._break_done.clear()
-            # If in tray, show root first, then open break screen
+            # If in tray, show root first then open break
             def _start_break():
-                state.app.root.deiconify()   # gizliyse göster
-                state.app._hide_panel()       # paneli gizle (mola ekranı gelecek)
-                state.app.open_break()
-            safe_after(state.app.root, _start_break)
+                try:
+                    r = state.app.root
+                    r.deiconify()
+                    r.update()
+                    r.attributes("-fullscreen", True)
+                    r.update()
+                    state.app.open_break()
+                except Exception as e:
+                    print(f"Break open error: {e}")
+            try:
+                state.app.root.after(0, _start_break)
+            except Exception:
+                pass
 
         while state.app and not state.app._break_done.is_set() and state.running:
             time.sleep(0.5)
