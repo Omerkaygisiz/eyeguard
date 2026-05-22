@@ -88,7 +88,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 
 # Run
-python mola_programi.py
+python eyeguard.py
 ```
 
 ### Build EXE
@@ -105,7 +105,7 @@ pyinstaller eyeguard.spec
 
 ```
 eyeguard/
-├── mola_programi.py        # Main application
+├── eyeguard.py             # Main application
 ├── eyeguard.spec           # PyInstaller configuration
 ├── requirements.txt        # Python dependencies
 ├── notifications/          # Sound files
